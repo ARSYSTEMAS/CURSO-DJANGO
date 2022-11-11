@@ -1,0 +1,16 @@
+
+django-admin startproject xxnombre del proyectoxxx    "Crea PROYECTO desde cero"
+
+python manage.py migrate                              "Activa BD "
+
+python manage.py runserver                            "Inicializa servidor"
+
+python manage.py startapp xxnombre de aplicacionxxx   "Crea inicializa app-APLICACIONES"
+
+python manage.py check   xxnombre de aplicacionxxx    "checkea app-APLICACIONES"
+
+python manage.py makemigrations                       "Realiza las migraciones de los models app(Crea base datos) "
+
+python manage.py sqlmigrate xnombreaplicax xxnumeroxxx "Realiza el Sql process de la base datos"
+
+python manage.py migrate                              "Activa BD despues del sqlmigrate " 

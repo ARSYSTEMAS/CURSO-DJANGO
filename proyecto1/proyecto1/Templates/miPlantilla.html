@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi primera plantilla de Saludos</title>
+</head>
+<body>
+
+{% include "superior/barra.html" %}
+<p><strong>Hola esta es mi primera pagina web con djangooo y el uso de plantillas</strong></p>
+
+{# ESTO ES UN COMENTARIO DE UNA SOLA LINEA #}
+
+{%comment%} ESTO ES UN COMENTARIO
+            DE VARIAS
+            LINEAS
+{%endcomment%}
+
+{% if nombre_persona.lower == 'abigail' %}
+    <p><strong>TE AMO {{nombre_persona|lower}}  MI AMOR</strong></p>
+{% else %}
+    <p><strong>BIENVENIDO {{nombre_persona.lower}}</strong></p>
+{% endif %}
+
+<p style="color:red"><strong>hola  {{nombre_persona|upper}} {{apellido_persona.lower}}</strong></p>
+<p><strong>Hoy estamos al d&iacute;a de: {{fecha}}</strong></p>
+<p><strong>Listas de Cursos:</strong></p>
+    <ul>
+
+    {% if temas %}
+        {% for element in temas  %}
+
+            <li>   {{element.upper}} </li>
+
+        {% endfor %}
+    {% else %}
+            <p><strong style="color:blue">****Por los momentos no hay cursos****</strong></p>
+    {% endif %}
+    </ul>
+
+<p><strong>Listas de Cursos otros:</strong></p>
+<ul>
+
+
+        {% for element in temas  %}
+
+            <li>   {{element.upper}} </li>
+        {% empty %}
+        <p><strong style="color:blue">****Por los momentos no hay cursos****</strong></p>
+        {% endfor %}
+
+
+
+</body>
+</html>
