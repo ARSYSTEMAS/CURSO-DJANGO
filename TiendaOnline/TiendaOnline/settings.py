@@ -74,10 +74,36 @@ WSGI_APPLICATION = 'TiendaOnline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+# SQLITE
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# POSTGRESQL
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'articulosclientes',
+	    'USER': 'postgres',
+	    'PASSWORD': 'admin',
+	    'HOST':'127.0.0.1',
+	    'DATABASE_PORT':'5432',
+    }
+}'''
+
+
+# MYSQL
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'articulosclientes',
+	    'USER': 'root',
+	    'PASSWORD': '',
+        'HOST':'localhost',
+	    'PORT':'3306',
     }
 }
 
@@ -104,7 +130,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-eu'
 
 TIME_ZONE = 'UTC'
 
@@ -122,3 +149,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Configuration emails Gmail
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = '' #past the key or password app here
+
+
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

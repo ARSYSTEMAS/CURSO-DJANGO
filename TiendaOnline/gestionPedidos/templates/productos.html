@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+</head>
+
+
+<body>
+<p> Estas Buscando:  <strong> {{query}} </strong> </p>
+
+    {% if art %}
+
+        <p> Articulos encontrados:  {{art|length}} articulos </p>
+
+        <ul>
+
+            {% for articulo in art %}
+            <li>
+
+               {{ articulo.nombre }} &nbsp; {{ articulo.seccion }} &nbsp; {{ articulo.precio }}
+
+            </li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+             <p> <h1><strong> Articulo no encontrado... </strong></h1></p>
+    {% endif %}
+
+</body>
+</html>

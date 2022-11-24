@@ -14,3 +14,150 @@ python manage.py makemigrations                       "Realiza las migraciones d
 python manage.py sqlmigrate xnombreaplicax xxnumeroxxx "Realiza el Sql process de la base datos"
 
 python manage.py migrate                              "Activa BD despues del sqlmigrate " 
+
+python manage.py shell                                "Activa el shell " 
+
+from xxxnombre aplicacion.modelsxxx import xxxnombre clase xxx  "Importar modelo de una aplicacion"
+
+nomvariable=nombre clase(atributos= valor).save()     "Realizar INSERT a una clase o tabla de base datos"
+
+ejemplo= art1=Articulos.objects.create(nombre='mesa',seccion='decoracion',precio=90)
+	 art1.save()
+	 
+         art1.precio = 85
+	 art1.save()             "Realiza Update en un campo"
+
+	 art1=Articulos.objects.get(id=3)
+	 art1.delete()           "Realiza Delete en una fila especifica"
+
+         Lista=Articulos.objects.all()   "Realiza select de toda la tabla"
+	 lista.query.__str__()
+
+	Articulos.objects.filter(seccion='deportes') "Realiza un query con criterios"
+	
+	Articulos.objects.filter(seccion='deportes',  precio__gte=90) "Realiza un query con criterios mayor = que"
+	
+	Articulos.objects.filter(seccion='deportes',  precio__lte=90) "Realiza un query con criterios menor = que"
+
+	Articulos.objects.filter(seccion='deportes',  precio__lt=90) "Realiza un query con criterios mayor que"
+
+	Articulos.objects.filter(nombre='mesa', precio__range=[10,90]) "Realiza un query con criterios entre dos rangos"
+	
+	Articulos.objects.filter(precio__gte=10).order_by('precio')   "Realiza un query con criterios ordenado de menor a mayor"
+
+	Articulos.objects.filter(precio__gte=10).order_by('-precio')   "Realiza un query con criterios ordenado de mayor a menor"
+	
+		
+BASES DATOS POSTGRESQL
+
+1.Instalar bases datos, crear bases datos
+2. Instlar la libreria a traves del comando pip install psycopg2
+3. Modificar en el archivo settings.py DATABASES.
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'articulosclientes',
+	'USER': 'postgres',
+	'PASSWORD': 'admin',
+	'HOST':'127.0.0.1',
+	'DATABASE_PORT':'5432',
+    }
+
+
+Nota: Para los que tengan el problema de ModuleNotFoundError: No module named 'django.db.backends.postgresql_pyscopg2'
+traten solamente con django.db.backends.postgresql en el engine
+
+nota: Hola, a los que no les funcione el makemigrations con ninguna solución de antes(un monton de errores de que no encontraba el dll de psycopg) seguramente estan haciendo el curso hace poco, 
+bueno sucede que psycopg2 no funciona de momento con postgresql version 13 ni con python 3.9, tuve que cambiar ambas cosas postgresql a version 11.4 y python version 3.8.0, con esto me ha funcionado igual que en el video, 
+al parecer con versiones mayores de post12 y python 3.8 no hay soporte aun para psycopg2
+
+Nota: Para los que les da error cuando hacen el makemigrations, en vez de importar la librería: pip install psycopg
+usen: pip install psycopg2-binary
+
+
+BASES DATOS MYSQL
+
+importar la libreria en todo el proyecto-aplicacion
+
+1. en el archivo __init__.py :
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
+2. en el archivo settings.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'articulosclientes',
+	    'USER': 'root',
+	    'PASSWORD': '',
+        'HOST':'localhost',
+	    'PORT':'3306',
+    }
+}
+
+3. python manage.py makemigrations
+
+4. python manage.py migrate
+
+
+
+CPANEL ADMIN:
+
+1. CREAR SUPER USUARIO
+	python manage.py createsuperuser
+
+2. IMPORTAR MODELO EN CPNEL
+	Abrir el archivo admin.py 
+		from gestionPedidos.models import Clientes
+
+	Registrar el modelo
+		admin.site.register(Clientes)
+
+3. COMO MODIFICAR EL NOMBRE DE UN CAMPO DE UNA TABLA EN EL CPANEL
+	archivo models.py 
+		buscar el modelo y el campo y agregar el atributo " verbose_name='' "
+
+
+4. COMO MODIFICAR LA ESTRUCTURA VISUAL EN CPANEL DE UN MODELO
+	archivo admin.py
+		crear una clase:
+			 ClientesAdmin(admin.ModelAdmin):
+				list_display=("nombre","direccion","telefono")
+		Modificar el modelo
+			 admin.site.register(Clientes,ClientesAdmin)
+
+5. COMO TENER UN SISTEMA DE BUSQUEDA EN EL CPANEL DE UN MODELO
+
+	archivo admin.py	
+		dentro de la clase modelo:
+			search_fields=("nombre","telefono")
+
+6. FILTRAR O HACER UN FILTRO DE REGISTROS POR CRITERIO DE CAMPOS
+
+		archivo admin.py
+			CREAR CLASE ARTICULOS	
+				class ArticulosAdmin(admin.ModelAdmin):
+					list_filter=("seccion")	
+						Modificar el modelo
+			 admin.site.register(Articulos,ArticulosAdmin)
+
+7. FILTRAR POR FECHAS EN EL CPANEL DE UN MODELO
+
+		archivo admin.py
+			CREAR CLASE PEDIDOS	
+				class PedidosAdmin(admin.ModelAdmin):
+					list_filter=("fecha",)	
+						Modificar el modelo
+			 admin.site.register(Pedidos,PedidosAdmin)
+
+8. AGREGAR FILTRO DE MIGA DE PAN EN EL CPANEL DE UN MODELO
+		
+			date_hierarchy="fecha"
+
+
+9. MODIFICAR EL LENGUAJE DE CPANEL
+			archivo settings.py
+				LANGUAGE_CODE = 'es-eu'
